@@ -7,7 +7,7 @@ env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
+ALLOWED_HOSTS = ['*']
 
 SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 
@@ -83,9 +83,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
