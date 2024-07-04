@@ -142,3 +142,4 @@ notes.md
 myvenv/
 db.*
 notes*
+.idea/
