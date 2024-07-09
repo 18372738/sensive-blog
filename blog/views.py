@@ -27,14 +27,13 @@ def serialize_tag(tag):
 def index(request):
     most_popular_posts = Post.objects.popular().fetch_with_tags_author()[:5].fetch_with_comments_count()
 
-    fresh_posts = Post.objects.order_by('-published_at').fetch_with_tags_author().fetch_with_comments_count()
-    most_fresh_posts = fresh_posts[:5]
+    fresh_posts = Post.objects.order_by('-published_at').fetch_with_tags_author().fetch_with_comments_count()[:5]
 
-    most_popular_tags = Tag.objects.popular()[:5].annotate(posts_count=Count('posts'))
+    most_popular_tags = Tag.objects.popular()[:5]
 
     context = {
         'most_popular_posts': [serialize_post(post) for post in most_popular_posts],
-        'page_posts': [serialize_post(post) for post in most_fresh_posts],
+        'page_posts': [serialize_post(post) for post in fresh_posts],
         'popular_tags': [serialize_tag(tag) for tag in most_popular_tags],
     }
     return render(request, 'index.html', context)
@@ -65,7 +64,7 @@ def post_detail(request, slug):
         'tags': [serialize_tag(tag) for tag in related_tags],
     }
 
-    most_popular_tags = Tag.objects.popular()[:5].annotate(posts_count=Count('posts'))
+    most_popular_tags = Tag.objects.popular()[:5]
 
     most_popular_posts = Post.objects.popular().fetch_with_tags_author()[:5].fetch_with_comments_count()
 
@@ -82,7 +81,7 @@ def post_detail(request, slug):
 def tag_filter(request, tag_title):
     tag = get_object_or_404(Tag, title=tag_title)
 
-    most_popular_tags = Tag.objects.popular()[:5].annotate(posts_count=Count('posts'))
+    most_popular_tags = Tag.objects.popular()[:5]
 
     most_popular_posts = Post.objects.popular().fetch_with_tags_author()[:5].fetch_with_comments_count()
 
